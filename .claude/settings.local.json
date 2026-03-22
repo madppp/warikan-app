@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"/Users/pablo/workspace/割り勘\" && npx create-next-app@14 . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes 2>&1)",
+      "Bash(cd \"/Users/pablo/workspace/割り勘\" && npm install @prisma/client prisma @libsql/client 2>&1 | tail -5)",
+      "Bash(cd \"/Users/pablo/workspace/割り勘\" && npm test 2>&1)",
+      "Bash(npm install:*)",
+      "Bash(source /Users/pablo/.zshrc && turso auth login 2>&1)",
+      "Bash(source /Users/pablo/.zshrc && turso db create trip-split 2>&1)",
+      "Bash(cd \"/Users/pablo/workspace/割り勘\" && node -e \"\nconst { createClient } = require\\('@libsql/client'\\);\nrequire\\('dotenv'\\).config\\(\\);\nconst client = createClient\\({ url: process.env.DATABASE_URL, authToken: process.env.TURSO_AUTH_TOKEN }\\);\nclient.execute\\('SELECT 1'\\).then\\(r => console.log\\('OK', r\\)\\).catch\\(e => console.error\\('ERROR', e.message\\)\\);\n\")",
+      "Bash(cd \"/Users/pablo/workspace/割り勘\" && node -e \"\nrequire\\('dotenv'\\).config\\(\\);\nconst { PrismaLibSql } = require\\('@prisma/adapter-libsql'\\);\nconst { createClient } = require\\('@libsql/client'\\);\nconst { PrismaClient } = require\\('@prisma/client'\\);\n\nconst libsql = createClient\\({ url: process.env.DATABASE_URL, authToken: process.env.TURSO_AUTH_TOKEN }\\);\nconst adapter = new PrismaLibSql\\(libsql\\);\nconst prisma = new PrismaClient\\({ adapter }\\);\n\nprisma.trip.findMany\\(\\).then\\(r => { console.log\\('OK', r\\); prisma.\\\\$disconnect\\(\\); }\\).catch\\(e => { console.error\\('ERROR', e.message\\); prisma.\\\\$disconnect\\(\\); }\\);\n\")",
+      "Bash(node -e \"\nconst m = require\\('@prisma/adapter-libsql'\\);\nconst cls = m.PrismaLibSql;\nconsole.log\\(cls.toString\\(\\).slice\\(0, 500\\)\\);\n\")",
+      "Bash(curl -s -X POST http://localhost:3000/api/trips -H \"Content-Type: application/json\" -d '{\"name\":\"Turso接続テスト\"}'\necho \"\"\ncurl -s http://localhost:3000/api/trips)",
+      "Bash(cat \"/Users/pablo/workspace/割り勘/.gitignore\" 2>/dev/null | grep -E \"^\\\\.env$\" || echo \"need to check\"\nls \"/Users/pablo/workspace/割り勘/.gitignore\" 2>/dev/null && head -5 \"/Users/pablo/workspace/割り勘/.gitignore\")",
+      "Bash(echo \"\" >> \"/Users/pablo/workspace/割り勘/.gitignore\" && echo \".env\" >> \"/Users/pablo/workspace/割り勘/.gitignore\" && echo \"dev.db\" >> \"/Users/pablo/workspace/割り勘/.gitignore\" && echo \"dummy.db\" >> \"/Users/pablo/workspace/割り勘/.gitignore\"\ngrep -E \"^\\\\.env$|dev\\\\.db|dummy\" \"/Users/pablo/workspace/割り勘/.gitignore\")"
+    ]
+  }
+}

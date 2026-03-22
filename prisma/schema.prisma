@@ -1,0 +1,48 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Trip {
+  id        String    @id @default(cuid())
+  name      String
+  kanjiId   String?
+  createdAt DateTime  @default(now())
+  members   Member[]
+  expenses  Expense[]
+}
+
+model Member {
+  id           String         @id @default(cuid())
+  tripId       String
+  name         String
+  ratio        Float          @default(1.0)
+  trip         Trip           @relation(fields: [tripId], references: [id])
+  paidExpenses Expense[]      @relation("PaidBy")
+  splits       ExpenseSplit[]
+}
+
+model Expense {
+  id          String         @id @default(cuid())
+  tripId      String
+  description String
+  amount      Int
+  paidById    String
+  createdAt   DateTime       @default(now())
+  trip        Trip           @relation(fields: [tripId], references: [id])
+  paidBy      Member         @relation("PaidBy", fields: [paidById], references: [id])
+  splits      ExpenseSplit[]
+}
+
+model ExpenseSplit {
+  id        String  @id @default(cuid())
+  expenseId String
+  memberId  String
+  expense   Expense @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  member    Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}

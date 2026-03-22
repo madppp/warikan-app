@@ -1,101 +1,133 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
+type Trip = {
+  id: string
+  name: string
+  createdAt: string
+  _count: { members: number; expenses: number }
+}
+
+export default function HomePage() {
+  const router = useRouter()
+  const [tripName, setTripName] = useState('')
+  const [creating, setCreating] = useState(false)
+  const [error, setError] = useState('')
+  const [trips, setTrips] = useState<Trip[]>([])
+  const [loadingTrips, setLoadingTrips] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/trips')
+      .then((r) => r.json())
+      .then((data) => { setTrips(data); setLoadingTrips(false) })
+      .catch(() => setLoadingTrips(false))
+  }, [])
+
+  async function handleCreate(e: React.FormEvent) {
+    e.preventDefault()
+    if (!tripName.trim()) return
+    setCreating(true)
+    setError('')
+    try {
+      const res = await fetch('/api/trips', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: tripName.trim() }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      router.push(`/trip/${data.id}`)
+    } catch (err: any) {
+      setError(err.message || 'エラーが発生しました')
+      setCreating(false)
+    }
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="min-h-screen pb-10" style={{ background: 'var(--bg)' }}>
+      <div className="w-full max-w-sm mx-auto px-4">
+        {/* Header */}
+        <div className="text-center pt-16 pb-8">
+          <h1 className="text-5xl font-bold mb-2" style={{ letterSpacing: '-1px' }}>割り勘</h1>
+          <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>旅行グループの支出を管理</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+
+        {/* Create Group */}
+        <div className="ios-card p-5 mb-6">
+          <h2 className="text-base font-semibold mb-3">新しいグループを作成</h2>
+          <form onSubmit={handleCreate} className="flex flex-col gap-3">
+            <input
+              className="ios-input"
+              placeholder="グループ名（例：沖縄旅行）"
+              value={tripName}
+              onChange={(e) => setTripName(e.target.value)}
+              disabled={creating}
+            />
+            <button
+              type="submit"
+              className="ios-btn ios-btn-primary"
+              disabled={creating || !tripName.trim()}
+              style={{ opacity: !tripName.trim() ? 0.5 : 1 }}
+            >
+              {creating ? '作成中…' : '作成する'}
+            </button>
+          </form>
+          {error && (
+            <p className="mt-3 text-sm text-center rounded-xl py-2" style={{ background: '#FFE5E5', color: 'var(--red)' }}>
+              {error}
+            </p>
+          )}
+        </div>
+
+        {/* Trip List */}
+        <div>
+          <h2 className="text-xs font-semibold px-1 mb-2" style={{ color: 'var(--text-secondary)' }}>
+            作成済みの旅行
+          </h2>
+
+          {loadingTrips ? (
+            <div className="ios-card px-4 py-6 text-center text-sm" style={{ color: 'var(--gray)' }}>
+              読み込み中…
+            </div>
+          ) : trips.length === 0 ? (
+            <div className="ios-card px-4 py-8 text-center">
+              <p className="text-2xl mb-2">✈️</p>
+              <p className="text-sm" style={{ color: 'var(--gray)' }}>まだ旅行がありません</p>
+            </div>
+          ) : (
+            <div className="ios-card">
+              {trips.map((trip, i) => (
+                <button
+                  key={trip.id}
+                  className="w-full ios-list-item justify-between"
+                  style={{ borderBottom: i < trips.length - 1 ? '0.5px solid var(--separator)' : 'none' }}
+                  onClick={() => router.push(`/trip/${trip.id}`)}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div
+                      className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-base shrink-0"
+                      style={{ background: 'var(--blue)' }}
+                    >
+                      ✈
+                    </div>
+                    <div className="text-left min-w-0">
+                      <p className="font-medium truncate">{trip.name}</p>
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
+                        {trip._count.members}人 · {trip._count.expenses}件の支出
+                      </p>
+                    </div>
+                  </div>
+                  <svg width="8" height="13" viewBox="0 0 8 13" fill="none" className="shrink-0 ml-2" style={{ color: 'var(--gray)' }}>
+                    <path d="M1 1l6 5.5L1 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </main>
+  )
 }
