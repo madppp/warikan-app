@@ -17,6 +17,23 @@ export async function PATCH(
   }
 }
 
+export async function DELETE(
+  _request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    await prisma.$transaction([
+      prisma.expenseSplit.deleteMany({ where: { expense: { tripId: params.id } } }),
+      prisma.expense.deleteMany({ where: { tripId: params.id } }),
+      prisma.member.deleteMany({ where: { tripId: params.id } }),
+      prisma.trip.delete({ where: { id: params.id } }),
+    ])
+    return NextResponse.json({ ok: true })
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to delete trip' }, { status: 500 })
+  }
+}
+
 export async function GET(
   _request: Request,
   { params }: { params: { id: string } }

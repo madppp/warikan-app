@@ -17,6 +17,7 @@ export default function HomePage() {
   const [error, setError] = useState('')
   const [trips, setTrips] = useState<Trip[]>([])
   const [loadingTrips, setLoadingTrips] = useState(true)
+  const [deletingId, setDeletingId] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/trips')
@@ -24,6 +25,20 @@ export default function HomePage() {
       .then((data) => { setTrips(data); setLoadingTrips(false) })
       .catch(() => setLoadingTrips(false))
   }, [])
+
+  async function handleDelete(trip: Trip) {
+    if (!confirm(`「${trip.name}」を削除しますか？この操作は取り消せません`)) return
+    setDeletingId(trip.id)
+    try {
+      const res = await fetch(`/api/trips/${trip.id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error()
+      setTrips((prev) => prev.filter((t) => t.id !== trip.id))
+    } catch {
+      alert('削除に失敗しました')
+    } finally {
+      setDeletingId(null)
+    }
+  }
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault()
@@ -99,30 +114,38 @@ export default function HomePage() {
           ) : (
             <div className="ios-card">
               {trips.map((trip, i) => (
-                <button
+                <div
                   key={trip.id}
-                  className="w-full ios-list-item justify-between"
+                  className="ios-list-item justify-between"
                   style={{ borderBottom: i < trips.length - 1 ? '0.5px solid var(--separator)' : 'none' }}
-                  onClick={() => router.push(`/trip/${trip.id}`)}
                 >
-                  <div className="flex items-center gap-3 min-w-0">
+                  <button
+                    className="flex items-center gap-3 min-w-0 flex-1 text-left"
+                    style={{ minHeight: 44 }}
+                    onClick={() => router.push(`/trip/${trip.id}`)}
+                  >
                     <div
                       className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-base shrink-0"
                       style={{ background: 'var(--blue)' }}
                     >
                       ✈
                     </div>
-                    <div className="text-left min-w-0">
+                    <div className="min-w-0">
                       <p className="font-medium truncate">{trip.name}</p>
                       <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                         {trip._count.members}人 · {trip._count.expenses}件の支出
                       </p>
                     </div>
-                  </div>
-                  <svg width="8" height="13" viewBox="0 0 8 13" fill="none" className="shrink-0 ml-2" style={{ color: 'var(--gray)' }}>
-                    <path d="M1 1l6 5.5L1 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
+                  </button>
+                  <button
+                    className="shrink-0 ml-3 text-sm font-medium px-2 py-1"
+                    style={{ color: 'var(--red)', minHeight: 44, minWidth: 44 }}
+                    disabled={deletingId === trip.id}
+                    onClick={() => handleDelete(trip)}
+                  >
+                    {deletingId === trip.id ? '…' : '削除'}
+                  </button>
+                </div>
               ))}
             </div>
           )}
