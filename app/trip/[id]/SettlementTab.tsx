@@ -171,6 +171,14 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
   return (
     <div className="p-4 flex flex-col gap-4">
 
+      {/* Total Card */}
+      <div className="ios-card px-4 py-3 flex items-center justify-between">
+        <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>旅行の総費用</span>
+        <span className="text-2xl font-bold" style={{ color: 'var(--blue)' }}>
+          ¥{totalAmount.toLocaleString()}
+        </span>
+      </div>
+
       {/* 丸めトグル（セグメントコントロール） */}
       <div
         className="flex p-1 rounded-xl"

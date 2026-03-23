@@ -210,6 +210,16 @@ export default function ExpensesTab({ trip, onUpdate }: { trip: Trip; onUpdate: 
         </div>
       )}
 
+      {/* Total Card */}
+      {trip.expenses.length > 0 && (
+        <div className="ios-card px-4 py-3 flex items-center justify-between">
+          <span className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>旅行の総費用</span>
+          <span className="text-2xl font-bold" style={{ color: 'var(--blue)' }}>
+            ¥{trip.expenses.reduce((s, e) => s + e.amount, 0).toLocaleString()}
+          </span>
+        </div>
+      )}
+
       {/* Expenses List */}
       {trip.expenses.length === 0 ? (
         <div className="text-center py-12" style={{ color: 'var(--gray)' }}>
