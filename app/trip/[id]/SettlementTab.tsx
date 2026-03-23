@@ -92,7 +92,7 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
     const partialExpenses = trip.expenses.filter((e) => {
       const splitIds = new Set(e.splits.map((s) => s.memberId))
       return allMemberIds.size !== splitIds.size ||
-        [...allMemberIds].some((id) => !splitIds.has(id))
+        Array.from(allMemberIds).some((id) => !splitIds.has(id))
     })
     const partialNotes = partialExpenses.map((e) => {
       const splitIds = new Set(e.splits.map((s) => s.memberId))

@@ -100,13 +100,9 @@ export default function TripPage({ tripId }: { tripId: string }) {
     <div className="min-h-screen" style={{ background: 'var(--bg)' }}>
       {/* Header */}
       <header
-        className="sticky top-0 z-10 px-4 pb-3"
+        className="px-4 pt-4 pb-3"
         style={{
-          background: 'rgba(242, 242, 247, 0.9)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
           borderBottom: '0.5px solid var(--separator)',
-          paddingTop: 'max(44px, env(safe-area-inset-top, 44px))',
         }}
       >
         <Link
