@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Crown, Share2, ChevronDown, ChevronUp, Users, Receipt } from 'lucide-react'
 import { calculateKanjiSettlement, calculateBalances } from '@/lib/settlement'
 
 type Member = { id: string; name: string; ratio: number; tripId: string }
@@ -49,7 +50,7 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
   if (trip.members.length === 0) {
     return (
       <div className="p-4 text-center py-16" style={{ color: 'var(--gray)' }}>
-        <div className="text-4xl mb-2">👥</div>
+        <Users size={40} className="mx-auto mb-2" />
         <p className="text-sm">メンバーを追加してください</p>
       </div>
     )
@@ -58,7 +59,7 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
   if (!trip.kanjiId) {
     return (
       <div className="p-4 text-center py-16" style={{ color: 'var(--gray)' }}>
-        <div className="text-4xl mb-3">👑</div>
+        <Crown size={40} className="mx-auto mb-3" />
         <p className="font-semibold mb-1">幹事が設定されていません</p>
         <p className="text-sm">メンバータブから幹事を設定してください</p>
       </div>
@@ -68,7 +69,7 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
   if (trip.expenses.length === 0) {
     return (
       <div className="p-4 text-center py-16" style={{ color: 'var(--gray)' }}>
-        <div className="text-4xl mb-2">💴</div>
+        <Receipt size={40} className="mx-auto mb-2" />
         <p className="text-sm">支出を追加してください</p>
       </div>
     )
@@ -279,7 +280,7 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
                   className="ml-1.5 text-xs px-1.5 py-0.5 rounded font-semibold"
                   style={{ background: '#E5F5EB', color: 'var(--green)' }}
                 >
-                  幹事
+                  <Crown size={11} className="inline mr-0.5" />幹事
                 </span>
               </div>
             </div>
@@ -328,7 +329,7 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
           style={{ color: 'var(--blue)' }}
         >
           <span className="font-semibold">計算方法を見る</span>
-          <span style={{ transform: showDetail ? 'rotate(180deg)' : 'none', transition: '0.2s' }}>▼</span>
+          {showDetail ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
         </button>
 
         {showDetail && (
@@ -366,9 +367,9 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
       <button
         className="ios-btn"
         onClick={handleCopy}
-        style={{ background: '#06C755', color: 'white', gap: '6px', fontSize: '16px' }}
+        style={{ background: '#06C755', color: 'white', gap: '8px', fontSize: '16px' }}
       >
-        <span>💬</span>
+        <Share2 size={18} />
         <span>LINEにコピー</span>
       </button>
 

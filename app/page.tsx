@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { Plane, Trash2 } from 'lucide-react'
 
 type Trip = {
   id: string
@@ -125,10 +126,10 @@ export default function HomePage() {
                     onClick={() => router.push(`/trip/${trip.id}`)}
                   >
                     <div
-                      className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-bold text-base shrink-0"
+                      className="w-9 h-9 rounded-xl flex items-center justify-center text-white shrink-0"
                       style={{ background: 'var(--blue)' }}
                     >
-                      ✈
+                      <Plane size={18} />
                     </div>
                     <div className="min-w-0">
                       <p className="font-medium truncate">{trip.name}</p>
@@ -143,7 +144,7 @@ export default function HomePage() {
                     disabled={deletingId === trip.id}
                     onClick={() => handleDelete(trip)}
                   >
-                    {deletingId === trip.id ? '…' : '削除'}
+                    {deletingId === trip.id ? '…' : <Trash2 size={18} />}
                   </button>
                 </div>
               ))}

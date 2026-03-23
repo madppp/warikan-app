@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Plus, Pencil, Trash2, Users, Receipt } from 'lucide-react'
 
 type Member = { id: string; name: string; ratio: number; tripId: string }
 type Split = { id: string; memberId: string; member: Member }
@@ -118,7 +119,7 @@ export default function ExpensesTab({ trip, onUpdate }: { trip: Trip; onUpdate: 
   if (trip.members.length === 0) {
     return (
       <div className="p-4 text-center py-16" style={{ color: 'var(--gray)' }}>
-        <div className="text-4xl mb-2">👥</div>
+        <Users size={40} className="mx-auto mb-2" />
         <p className="text-sm">先にメンバーを追加してください</p>
       </div>
     )
@@ -127,8 +128,8 @@ export default function ExpensesTab({ trip, onUpdate }: { trip: Trip; onUpdate: 
   return (
     <div className="p-4 flex flex-col gap-4">
       {/* Add Button */}
-      <button className="ios-btn ios-btn-primary" onClick={openAddForm}>
-        ＋ 支出を追加
+      <button className="ios-btn ios-btn-primary gap-1.5" onClick={openAddForm}>
+        <Plus size={18} />支出を追加
       </button>
 
       {/* Modal Form (add & edit) */}
@@ -212,7 +213,7 @@ export default function ExpensesTab({ trip, onUpdate }: { trip: Trip; onUpdate: 
       {/* Expenses List */}
       {trip.expenses.length === 0 ? (
         <div className="text-center py-12" style={{ color: 'var(--gray)' }}>
-          <div className="text-4xl mb-2">💴</div>
+          <Receipt size={40} className="mx-auto mb-2" />
           <p className="text-sm">支出を追加してください</p>
         </div>
       ) : (
@@ -234,17 +235,17 @@ export default function ExpensesTab({ trip, onUpdate }: { trip: Trip; onUpdate: 
                 </span>
                 <button
                   onClick={() => openEditForm(expense)}
-                  className="text-sm px-2 py-1 rounded-lg"
-                  style={{ color: 'var(--blue)', background: '#EAF3FF', minHeight: '32px' }}
+                  className="flex items-center justify-center px-2 py-1 rounded-lg"
+                  style={{ color: 'var(--blue)', background: '#EAF3FF', minHeight: '32px', minWidth: '32px' }}
                 >
-                  編集
+                  <Pencil size={15} />
                 </button>
                 <button
                   onClick={() => handleDelete(expense.id, expense.description)}
-                  className="text-sm px-2 py-1 rounded-lg"
-                  style={{ color: 'var(--red)', background: '#FFF0EE', minHeight: '32px' }}
+                  className="flex items-center justify-center px-2 py-1 rounded-lg"
+                  style={{ color: 'var(--red)', background: '#FFF0EE', minHeight: '32px', minWidth: '32px' }}
                 >
-                  削除
+                  <Trash2 size={15} />
                 </button>
               </div>
             </div>

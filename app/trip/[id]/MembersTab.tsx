@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Crown, Pencil, Trash2, Plus, Users } from 'lucide-react'
 
 type Member = { id: string; name: string; ratio: number; tripId: string }
 type Trip = { id: string; name: string; kanjiId: string | null; members: Member[]; expenses: any[] }
@@ -126,11 +127,11 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
           </div>
           <button
             type="submit"
-            className="ios-btn ios-btn-primary"
+            className="ios-btn ios-btn-primary gap-1.5"
             disabled={adding || !name.trim()}
             style={{ opacity: !name.trim() ? 0.5 : 1 }}
           >
-            {adding ? '追加中…' : '追加'}
+            {adding ? '追加中…' : <><Plus size={18} />追加</>}
           </button>
         </form>
       </div>
@@ -138,7 +139,7 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
       {/* Members List */}
       {trip.members.length === 0 ? (
         <div className="text-center py-12" style={{ color: 'var(--gray)' }}>
-          <div className="text-4xl mb-2">👥</div>
+          <Users size={40} className="mx-auto mb-2" />
           <p className="text-sm">メンバーを追加してください</p>
         </div>
       ) : (
@@ -189,10 +190,10 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
                           <p className="font-medium">{member.name}</p>
                           {trip.kanjiId === member.id && (
                             <span
-                              className="text-xs px-1.5 py-0.5 rounded font-semibold"
+                              className="inline-flex items-center gap-0.5 text-xs px-1.5 py-0.5 rounded font-semibold"
                               style={{ background: '#E5F5EB', color: 'var(--green)' }}
                             >
-                              幹事
+                              <Crown size={11} />幹事
                             </span>
                           )}
                         </div>
@@ -216,17 +217,17 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
                       </button>
                       <button
                         onClick={() => startEdit(member)}
-                        className="text-sm px-2 py-1.5 rounded-lg"
-                        style={{ color: 'var(--blue)', background: '#EAF3FF', minHeight: '32px' }}
+                        className="flex items-center justify-center px-2 py-1.5 rounded-lg"
+                        style={{ color: 'var(--blue)', background: '#EAF3FF', minHeight: '32px', minWidth: '32px' }}
                       >
-                        編集
+                        <Pencil size={15} />
                       </button>
                       <button
                         onClick={() => handleDelete(member.id, member.name)}
-                        className="text-sm px-2 py-1.5 rounded-lg"
-                        style={{ color: 'var(--red)', background: '#FFF0EE', minHeight: '32px' }}
+                        className="flex items-center justify-center px-2 py-1.5 rounded-lg"
+                        style={{ color: 'var(--red)', background: '#FFF0EE', minHeight: '32px', minWidth: '32px' }}
                       >
-                        削除
+                        <Trash2 size={15} />
                       </button>
                     </div>
                   </div>

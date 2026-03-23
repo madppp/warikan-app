@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import { ChevronLeft, Users, Receipt, Calculator } from 'lucide-react'
 import MembersTab from './MembersTab'
 import ExpensesTab from './ExpensesTab'
 import SettlementTab from './SettlementTab'
@@ -39,9 +40,9 @@ type Trip = {
 }
 
 const TABS = [
-  { key: 'members', label: 'メンバー', icon: '👥' },
-  { key: 'expenses', label: '支出', icon: '💴' },
-  { key: 'settlement', label: '精算', icon: '✅' },
+  { key: 'members', label: 'メンバー', Icon: Users },
+  { key: 'expenses', label: '支出', Icon: Receipt },
+  { key: 'settlement', label: '精算', Icon: Calculator },
 ] as const
 
 type TabKey = typeof TABS[number]['key']
@@ -110,9 +111,7 @@ export default function TripPage({ tripId }: { tripId: string }) {
           className="inline-flex items-center gap-0.5 mb-1"
           style={{ color: 'var(--blue)', fontSize: '17px' }}
         >
-          <svg width="11" height="18" viewBox="0 0 11 18" fill="none" style={{ marginRight: '2px' }}>
-            <path d="M9.5 1.5L2 9l7.5 7.5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <ChevronLeft size={22} strokeWidth={2.2} style={{ marginLeft: '-4px' }} />
           トップ
         </Link>
         <h1 className="text-xl font-bold leading-tight">{trip.name}</h1>
@@ -142,7 +141,7 @@ export default function TripPage({ tripId }: { tripId: string }) {
             className={`tab-item ${activeTab === tab.key ? 'active' : ''}`}
             onClick={() => setActiveTab(tab.key)}
           >
-            <span className="text-xl mb-0.5">{tab.icon}</span>
+            <tab.Icon size={22} className="mb-0.5" />
             <span>{tab.label}</span>
           </button>
         ))}
