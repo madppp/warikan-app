@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --blue: #007AFF;
-  --red: #FF3B30;
-  --green: #34C759;
-  --gray: #8E8E93;
-  --bg: #F2F2F7;
+  --blue: #2F3437;
+  --red: #E16259;
+  --green: #4DAB9A;
+  --gray: #9B9A97;
+  --bg: #F7F6F3;
   --card: #FFFFFF;
-  --text: #000000;
-  --text-secondary: #6C6C70;
-  --separator: #C6C6C8;
+  --text: #1A1A1A;
+  --text-secondary: #9B9A97;
+  --separator: #E9E9E7;
 }
 
 * {
@@ -80,8 +80,8 @@ body {
 .ios-list-item {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  min-height: 44px;
+  padding: 14px 16px;
+  min-height: 48px;
   background: var(--card);
   border-bottom: 0.5px solid var(--separator);
 }
@@ -95,7 +95,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 0.5px solid var(--separator);

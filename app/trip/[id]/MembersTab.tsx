@@ -180,8 +180,11 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
                   <div className="ios-list-item justify-between" style={{ borderBottom: 'none' }}>
                     <div className="flex items-center gap-3">
                       <div
-                        className="w-9 h-9 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0"
-                        style={{ background: trip.kanjiId === member.id ? 'var(--green)' : 'var(--blue)' }}
+                        className="w-9 h-9 rounded-full flex items-center justify-center font-semibold text-sm shrink-0"
+                        style={{
+                          background: trip.kanjiId === member.id ? 'var(--green)' : '#E9E9E7',
+                          color: trip.kanjiId === member.id ? 'white' : '#2F3437',
+                        }}
                       >
                         {member.name[0]}
                       </div>
@@ -191,7 +194,7 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
                           {trip.kanjiId === member.id && (
                             <span
                               className="inline-flex items-center gap-0.5 text-xs px-1.5 py-0.5 rounded font-semibold"
-                              style={{ background: '#E5F5EB', color: 'var(--green)' }}
+                              style={{ background: '#EBF7F5', color: 'var(--green)' }}
                             >
                               <Crown size={11} />幹事
                             </span>
@@ -208,7 +211,7 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
                         className="text-xs px-2 py-1.5 rounded-lg"
                         style={{
                           color: trip.kanjiId === member.id ? 'var(--gray)' : 'var(--green)',
-                          background: trip.kanjiId === member.id ? 'var(--bg)' : '#E5F5EB',
+                          background: trip.kanjiId === member.id ? 'var(--bg)' : '#EBF7F5',
                           minHeight: '32px',
                           border: trip.kanjiId === member.id ? '1px solid var(--separator)' : 'none',
                         }}
@@ -218,14 +221,14 @@ export default function MembersTab({ trip, onUpdate }: { trip: Trip; onUpdate: (
                       <button
                         onClick={() => startEdit(member)}
                         className="flex items-center justify-center px-2 py-1.5 rounded-lg"
-                        style={{ color: 'var(--blue)', background: '#EAF3FF', minHeight: '32px', minWidth: '32px' }}
+                        style={{ color: 'var(--blue)', background: '#F0F0EE', minHeight: '32px', minWidth: '32px' }}
                       >
                         <Pencil size={15} />
                       </button>
                       <button
                         onClick={() => handleDelete(member.id, member.name)}
                         className="flex items-center justify-center px-2 py-1.5 rounded-lg"
-                        style={{ color: 'var(--red)', background: '#FFF0EE', minHeight: '32px', minWidth: '32px' }}
+                        style={{ color: 'var(--red)', background: '#FDEEED', minHeight: '32px', minWidth: '32px' }}
                       >
                         <Trash2 size={15} />
                       </button>

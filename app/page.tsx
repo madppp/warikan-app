@@ -91,7 +91,7 @@ export default function HomePage() {
             </button>
           </form>
           {error && (
-            <p className="mt-3 text-sm text-center rounded-xl py-2" style={{ background: '#FFE5E5', color: 'var(--red)' }}>
+            <p className="mt-3 text-sm text-center rounded-xl py-2" style={{ background: '#FEF1F0', color: 'var(--red)' }}>
               {error}
             </p>
           )}

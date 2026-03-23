@@ -223,10 +223,10 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
       <div className="ios-card overflow-hidden">
         <div
           className="px-4 py-2.5 flex items-center gap-2"
-          style={{ background: '#FFF5F5', borderBottom: '0.5px solid var(--separator)' }}
+          style={{ background: '#FEF1F0', borderBottom: '0.5px solid var(--separator)' }}
         >
           <span className="text-base">🧾</span>
-          <span className="text-sm font-semibold" style={{ color: '#C0392B' }}>
+          <span className="text-sm font-semibold" style={{ color: 'var(--red)' }}>
             {kanji.name}が集める
           </span>
         </div>
@@ -265,10 +265,10 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
       <div className="ios-card overflow-hidden">
         <div
           className="px-4 py-2.5 flex items-center gap-2"
-          style={{ background: '#F0FFF4', borderBottom: '0.5px solid var(--separator)' }}
+          style={{ background: '#EDF8F6', borderBottom: '0.5px solid var(--separator)' }}
         >
           <span className="text-base">💸</span>
-          <span className="text-sm font-semibold" style={{ color: '#27AE60' }}>
+          <span className="text-sm font-semibold" style={{ color: 'var(--green)' }}>
             {kanji.name}が返す
           </span>
         </div>
@@ -286,7 +286,7 @@ export default function SettlementTab({ trip }: { trip: Trip }) {
                 <span className="font-medium">{kanji.name}</span>
                 <span
                   className="ml-1.5 text-xs px-1.5 py-0.5 rounded font-semibold"
-                  style={{ background: '#E5F5EB', color: 'var(--green)' }}
+                  style={{ background: '#EBF7F5', color: 'var(--green)' }}
                 >
                   <Crown size={11} className="inline mr-0.5" />幹事
                 </span>

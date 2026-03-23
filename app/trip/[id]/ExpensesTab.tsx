@@ -246,14 +246,14 @@ export default function ExpensesTab({ trip, onUpdate }: { trip: Trip; onUpdate: 
                 <button
                   onClick={() => openEditForm(expense)}
                   className="flex items-center justify-center px-2 py-1 rounded-lg"
-                  style={{ color: 'var(--blue)', background: '#EAF3FF', minHeight: '32px', minWidth: '32px' }}
+                  style={{ color: 'var(--blue)', background: '#F0F0EE', minHeight: '32px', minWidth: '32px' }}
                 >
                   <Pencil size={15} />
                 </button>
                 <button
                   onClick={() => handleDelete(expense.id, expense.description)}
                   className="flex items-center justify-center px-2 py-1 rounded-lg"
-                  style={{ color: 'var(--red)', background: '#FFF0EE', minHeight: '32px', minWidth: '32px' }}
+                  style={{ color: 'var(--red)', background: '#FDEEED', minHeight: '32px', minWidth: '32px' }}
                 >
                   <Trash2 size={15} />
                 </button>
