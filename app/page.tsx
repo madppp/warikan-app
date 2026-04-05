@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Plane, Trash2 } from 'lucide-react'
+import { Plane, Trash2, Calculator } from 'lucide-react'
 
 type Trip = {
   id: string
@@ -70,8 +70,38 @@ export default function HomePage() {
           <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>旅行グループの支出を管理</p>
         </div>
 
+        {/* Mode Selection */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <button
+            className="ios-card p-4 text-left flex flex-col gap-2"
+            style={{ minHeight: 80 }}
+            onClick={() => router.push('/quick')}
+          >
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white" style={{ background: 'var(--green)' }}>
+              <Calculator size={16} />
+            </div>
+            <div>
+              <p className="font-semibold text-sm">簡易計算</p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>飲み会・食事に</p>
+            </div>
+          </button>
+          <button
+            className="ios-card p-4 text-left flex flex-col gap-2"
+            style={{ minHeight: 80 }}
+            onClick={() => document.getElementById('trip-section')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white" style={{ background: 'var(--blue)' }}>
+              <Plane size={16} />
+            </div>
+            <div>
+              <p className="font-semibold text-sm">旅行管理</p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>複数日・複数支出に</p>
+            </div>
+          </button>
+        </div>
+
         {/* Create Group */}
-        <div className="ios-card p-5 mb-6">
+        <div id="trip-section" className="ios-card p-5 mb-6">
           <h2 className="text-base font-semibold mb-3">新しいグループを作成</h2>
           <form onSubmit={handleCreate} className="flex flex-col gap-3">
             <input

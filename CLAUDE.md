@@ -116,3 +116,11 @@ TURSO_AUTH_TOKEN=
 - ratioは0.1〜2.0の範囲で設定可能（デフォルト1.0）
 - グループIDはcuidを使用（推測困難なURL）
 - エラー時はiOS風のアラート表示
+
+## GitHubイシュー
+
+タスクや今後の開発予定はGitHubイシューで管理している。
+作業前・提案時は必ず確認すること。
+
+- リポジトリ: https://github.com/madppp/warikan-app/issues
+- Issue #1: ネイティブアプリ化（Flutter） — iOS Liquid Glass / Android Material Design 3
